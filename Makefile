@@ -4,10 +4,8 @@
 
 
 # compiler variables
-Cname = g++
 Cflags = -ggdb -Wall
-# Clib = -lSDL2
-Clib = 
+Clib = -lSDL2
 
 
 
@@ -16,17 +14,17 @@ all : bin/affichage.out bin/exemple.out bin/test.out
 
 
 # exécutables
-bin/affichage.out : obj/mainAffichage.o obj/Pixel.o obj/Image.o
-	g++ $(Cflags) $(Clib) obj/mainAffichage.o obj/Pixel.o obj/Image.o -o bin/affichage.out
+bin/affichage : obj/mainAffichage.o obj/Pixel.o obj/Image.o
+	g++ $(Cflags) $(Clib) obj/mainAffichage.o obj/Pixel.o obj/Image.o -o bin/affichage
 
 
 
-bin/exemple.out : obj/mainExemple.o obj/Pixel.o obj/Image.o
-	g++ $(Cflags) $(Clib) obj/mainExemple.o obj/Pixel.o obj/Image.o -o bin/exemple.out
+bin/exemple : obj/mainExemple.o obj/Pixel.o obj/Image.o
+	g++ $(Cflags) $(Clib) obj/mainExemple.o obj/Pixel.o obj/Image.o -o bin/exemple
 
 
-bin/test.out : obj/mainTest.o obj/Pixel.o obj/Image.o
-	g++ $(Cflags) $(Clib) obj/mainTest.o obj/Pixel.o obj/Image.o -o bin/test.out
+bin/test : obj/mainTest.o obj/Pixel.o obj/Image.o
+	g++ $(Cflags) $(Clib) obj/mainTest.o obj/Pixel.o obj/Image.o -o bin/test
 
 
 
@@ -35,11 +33,11 @@ obj/mainAffichage.o : src/mainAffichage.cpp
 	g++ $(Cflags) $(Clib) -c src/mainAffichage.cpp -o obj/mainAffichage.o
 
 
-obj/mainExemple.o : mainExemple.cpp
+obj/mainExemple.o : src/mainExemple.cpp
 	g++ $(Cflags) $(Clib) -c src/mainExemple.cpp -o obj/mainExemple.o
 
 
-obj/mainTest.o : mainTest.cpp
+obj/mainTest.o : src/mainTest.cpp
 	g++ $(Cflags) $(Clib) -c src/mainTest.cpp -o obj/mainTest.o
 
 
@@ -49,7 +47,7 @@ obj/Pixel.o : src/Pixel.cpp src/Pixel.h
 	g++ $(Cflags) -c src/Pixel.cpp -o obj/Pixel.o
 
 
-obj/Image.o : src/Image.cpp src/Image.h
+obj/Image.o : src/Image.cpp src/Image.h src/Pixel.cpp src/Pixel.h
 	g++ $(Cflags) $(Clib) -c src/Image.cpp -o obj/Image.o
 
 

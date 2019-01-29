@@ -3,7 +3,6 @@
 
 
 
-
 /**
  * @brief      Initialise un pixel avec les valeurs (0, 0, 0)
  */
