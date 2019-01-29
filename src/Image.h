@@ -42,7 +42,7 @@ public:
 
 
     // Dessine un rectangle plein de la couleur dans l'image (en utilisant setPix, indices en paramètre compris)
-    void dessinerRectangle(unsigned int Xmin, unsigned int Ymin, unsigned int Xmax, unsigned int Ymax, const Pixel &couleur) const;
+    void dessinerRectangle(unsigned int Xmin, unsigned int Ymin, unsigned int Xmax, unsigned int Ymax, const Pixel &couleur);
 
 
 

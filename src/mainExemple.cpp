@@ -1,6 +1,6 @@
 #include "Image.h"
  
-int main() {
+int main(int argc, char** argv) {
    Pixel orange (255, 128, 0);
    Pixel rose (255, 128, 255);
    Pixel bleu (0, 128, 255);

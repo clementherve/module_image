@@ -2,13 +2,12 @@
 #include "Pixel.h"
 
 
+typedef unsigned char uchar;
 
 /**
  * @brief      Initialise un pixel avec les valeurs (0, 0, 0)
  */
-Pixel::Pixel():r(0), g(0), b(0){
-	std::cout << "[PIXEL] noir initialise\n";
-};
+Pixel::Pixel():r(0), g(0), b(0){};
 
 
 
@@ -20,9 +19,7 @@ Pixel::Pixel():r(0), g(0), b(0){
  * @param[in]  ng    composante verte du pixel
  * @param[in]  nb    composante bleu du pixel
  */
-Pixel::Pixel(unsigned char nr, unsigned char ng, unsigned char nb):r(nr), g(ng), b(nb){
-	std::cout << "[PIXEL] initialise\n";
-};
+Pixel::Pixel(uchar nr, uchar ng, uchar nb):r(nr), g(ng), b(nb){};
 
 
 
@@ -32,7 +29,7 @@ Pixel::Pixel(unsigned char nr, unsigned char ng, unsigned char nb):r(nr), g(ng),
  *
  * @return     la valeur de la composante rouge du pixel
  */
-unsigned char Pixel::getRouge() const {
+uchar Pixel::getRouge() const {
 	return this -> r;
 }
 
@@ -44,7 +41,7 @@ unsigned char Pixel::getRouge() const {
  *
  * @return     The vertical.
  */
-unsigned char Pixel::getVert() const {
+uchar Pixel::getVert() const {
 	return this -> g;
 }
 
@@ -57,7 +54,7 @@ unsigned char Pixel::getVert() const {
  *
  * @return     The bleu.
  */
-unsigned char Pixel::getBleu() const {
+uchar Pixel::getBleu() const {
 	return this -> b;
 }
 
@@ -70,7 +67,7 @@ unsigned char Pixel::getBleu() const {
  *
  * @param[in]  nr    { parameter_description }
  */
-void Pixel::setRouge(unsigned char nr){
+void Pixel::setRouge(uchar nr){
 	if(nr >= 0 && nr <= 255){
 		this -> r = nr;
 	}
@@ -85,7 +82,7 @@ void Pixel::setRouge(unsigned char nr){
  *
  * @param[in]  nv    { parameter_description }
  */
-void Pixel::setVert (unsigned char nv){
+void Pixel::setVert (uchar nv){
 	if(nv >= 0 && nv <= 255){
 		this -> g = nv;
 	}
@@ -100,7 +97,7 @@ void Pixel::setVert (unsigned char nv){
  *
  * @param[in]  nb    The number of
  */
-void Pixel::setBleu (unsigned char nb){
+void Pixel::setBleu (uchar nb){
 	if(nb >= 0 && nb <= 255){
 		this -> b = nb;
 	}

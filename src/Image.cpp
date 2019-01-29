@@ -16,8 +16,14 @@ Image::Image(): dimx(0), dimy(0){};
 Image::Image(unsigned int dimensionX, unsigned int dimensionY){
     this -> dimx = dimensionX;
     this -> dimy = dimensionY;
-    std::cout << this->dimx;
-    this -> tab = new Pixel[(this -> dimx) * (this -> dimy)];
+
+    const unsigned int dim = dimensionX*dimensionY;
+    this -> tab = new Pixel[dim];
+
+    // for(unsigned int i = 0; i<dim; i++){
+    //     tab[i] = Pixel(5, 5, 5);        
+    // }
+
 }
 
 
@@ -27,6 +33,8 @@ Image::Image(unsigned int dimensionX, unsigned int dimensionY){
 Image::~Image(){
     delete[] this -> tab;
     this -> tab = NULL;
+    this -> dimx = 0;
+    this -> dimy = 0;
 }
 
 
@@ -34,6 +42,12 @@ Image::~Image(){
 // Accesseur : récupère le pixel original de coordonnées (x,y) en vérifiant leur validité
 // la formule pour passer d'un tab 2D à un tab 1D est tab[y*dimx+x]
 Pixel Image::getPix(unsigned int x, unsigned int y){
+
+    assert(x >= 0);
+    assert(y >= 0);
+    assert(y <= this->dimx);
+    assert(y <= this->dimy);
+
     if(x >= 0 && y >= 0 && x <= this -> dimx && y <= this -> dimy){
         return this -> tab[y * this->dimx + x];
     } else {
@@ -59,7 +73,7 @@ void Image::setPix(unsigned int x, unsigned int y, const Pixel &couleur){
 
 
 // Dessine un rectangle plein de la couleur dans l'image (en utilisant setPix, indices en paramètre compris)
-void Image::dessinerRectangle(unsigned int Xmin, unsigned int Ymin, unsigned int Xmax, unsigned int Ymax, const Pixel &couleur) const {
+void Image::dessinerRectangle(unsigned int Xmin, unsigned int Ymin, unsigned int Xmax, unsigned int Ymax, const Pixel &couleur){
     int nbCasesX = Xmax - Xmin + 1;
     int nbCasesY = Ymax - Ymin + 1;
     int X;
@@ -67,7 +81,7 @@ void Image::dessinerRectangle(unsigned int Xmin, unsigned int Ymin, unsigned int
     for (int i = 0; i < nbCasesY; i++){
         X = Xmin;
         for (int j = 0; j < nbCasesX; j++){
-            this.setPix(X, Y, couleur);
+            this->setPix(X, Y, couleur);
             X = X + 1;
         }
         Y = Y + 1;
@@ -89,7 +103,12 @@ void Image::effacer(Pixel &couleur){
 // @brief      { function_description }
 //
 void Image::afficher(){
-
+    for(unsigned int i = 0; i < (this->dimx)*(this->dimy); i++){
+        std::cout << "[PIXEL]["<<i<<"]";
+        std::cout << "[" << (unsigned int) (this->tab[i]).getRouge()<<"]";
+        std::cout << "[" << (unsigned int) (this->tab[i]).getVert()<<"]";
+        std::cout << "[" << (unsigned int) (this->tab[i]).getBleu()<<"]\n";
+    }
 }
 
 
@@ -105,9 +124,9 @@ void Image::sauver(char* chemin){
 void Image::testRegression(){
 
     // test constructeur
-    // std::cout << "testReg\n";
-    // Image* img = new Image(2, 3);
-    // delete img;
-    // img = NULL;
+    std::cout << "testReg\n";
+    Image* img = new Image(2, 3);
+    delete img;
+    img = NULL;
 
 }
