@@ -12,7 +12,9 @@
 // Constructeur par défaut de la classe: initialise dimx et dimy à 0
 // ce constructeur n'alloue pas de pixel
 // 
-Image::Image(): dimx(0), dimy(0){};
+Image::Image(): dimx(0), dimy(0){
+    this->tab = NULL;
+};
 
 
 
@@ -69,7 +71,7 @@ Pixel& Image::getPix(const unsigned int x, const unsigned int y) const{
     if(x >= 0 && y >= 0 && x < this -> dimx && y < this -> dimy){
         return this -> tab[y * this->dimx + x];
     } else {
-        return this -> tab[0];
+        return this -> tab[0]; // wtf am i supposed to do ???????
     }
 }
 
@@ -126,12 +128,9 @@ void Image::effacer(Pixel &couleur){
 
 // 
 void Image::afficher(){
-    for(unsigned int i = 0; i < (this->dimx)*(this->dimy); i++){
-        std::cout << "[PIXEL]["<<i<<"]";
-        std::cout << "[" << (unsigned int) (this->tab[i]).getRouge()<<"]";
-        std::cout << "[" << (unsigned int) (this->tab[i]).getVert()<<"]";
-        std::cout << "[" << (unsigned int) (this->tab[i]).getBleu()<<"]\n";
-    }
+
+    // SDL goes here
+
 }
 
 
@@ -140,16 +139,25 @@ void Image::afficher(){
 
 // 
 void Image::sauver(const std::string& filename) const {
+    
     std::ofstream fichier(filename.c_str());
-    assert(fichier.is_open());
+    
+    assert(fichier.is_open()); // a remplacer par if(is_open()) ???
+    
     fichier << "P3\n";
-    fichier << dimx << " " << dimy << "\n";
+    fichier << this->dimx << " " << this->dimy << "\n";
     fichier << "255\n";
-    for(unsigned int y=0; y<dimy; ++y)
-        for(unsigned int x=0; x<dimx; ++x) {
-            Pixel& pix = getPix(x++,y);
+
+    for(unsigned int y=0; y<this->dimy; y++){
+        
+        for(unsigned int x=0; x<this->dimx; x++){
+            Pixel& pix = getPix(x,y); // permet d'éviter d'accéder 3 fois au pixel, on y accède une fois, et ensuite on travaille sur une référence (pix)
             fichier << pix.getRouge() << " " << pix.getVert() << " " << pix.getBleu() << " ";
         }
+
+    }
+
+
     std::cout << "Sauvegarde de l'image " << filename << " ... OK\n";
     fichier.close();
 }
@@ -160,26 +168,41 @@ void Image::sauver(const std::string& filename) const {
 
 // 
 void Image::ouvrir(const std::string& filename) {
+    
     std::ifstream fichier(filename.c_str());
+    
     assert(fichier.is_open());
-    char r,g,b;
+    
+    unsigned char r, g, b;
     std::string mot;
+    
     this -> dimx = 0;
     this -> dimy = 0;
-    fichier >> mot >> this->dimx >> this->dimy >> mot;
-    assert(this->dimx > 0 && this->dimy > 0);
-    if (tab != NULL) delete [] tab;
-    tab = new Pixel [this->dimx*this->dimy];
     
-    for(unsigned int y=0; y<this->dimy; ++y){
-        for(unsigned int x=0; x<this->dimx; ++x){
+    fichier >> mot >> this->dimx >> this->dimy >> mot;
+
+    std::cout << this->dimx << "; " << this->dimy << "\n";
+    
+    assert(this->dimx > 0 && this->dimy > 0);
+    
+    if (tab != NULL){
+        delete [] tab;
+    }
+
+    tab = new Pixel[this->dimx*this->dimy];
+    
+    for(unsigned int y=0; y < this->dimy; ++y){
+        for(unsigned int x=0; x < this->dimx; ++x){
             fichier >> r >> b >> g;
-            (getPix(x,y)).setRouge(r);
-            (getPix(x,y)).setVert(g);
-            (getPix(x,y)).setBleu(b);
+
+            std::cout << "(" << x << "," << y << ") = " << (int) r << " " << (int) g << " " << (int) b << "\n";
+
+            (this -> getPix(x,y)).setRouge(r);
+            (this -> getPix(x,y)).setVert(g);
+            (this -> getPix(x,y)).setBleu(b);
         }
     }
-    // delete[] tab;
+    
     fichier.close();
     std::cout << "Lecture de l'image " << filename << " ... OK\n";
 }
@@ -189,13 +212,13 @@ void Image::ouvrir(const std::string& filename) {
 
 
 
-// 
+// ok
 void Image::afficherConsole(){
     std::cout << this->dimx << " " << this->dimy << "\n";
     for(unsigned int y=0; y<this->dimy; y++) {
         for(unsigned int x=0; x<this->dimx; x++) {
             Pixel& pix = this->getPix(x,y);
-            std::cout << pix.getRouge() << " " << pix.getVert() << " " << pix.getBleu() << " ";
+            std::cout << "[" << (int) pix.getRouge() << " " << (int) pix.getVert() << " " << (int) pix.getBleu() << "]";
         }
         std::cout << "\n";
     }

@@ -3,7 +3,7 @@
 #include "Pixel.h"
 
 /**
-* @brief      Classe 'image': contient les informations d'une image
+* @brief      Classe 'image': contient les informations d'une image. Une image est représentée par un tableau de Pixel, et chaque pixel est représenté par les trois couleurs primaires : rouge, vert, bleu.
 */
 class Image{
 
@@ -22,7 +22,7 @@ Image();
 
 
 /**
- * @brief      Construit une image de dimension (dimensionX,dimensionY) et alloue de la mémoire en conséquence
+ * @brief      Construit une image de dimension (dimensionX,dimensionY) et alloue de la mémoire sur le tas en conséquence
  *
  * @param[in]  dimensionX  La largeur de l'image
  * @param[in]  dimensionY  La hauteur de l'image
@@ -62,7 +62,7 @@ void setPix(const unsigned int x, const unsigned int y, const Pixel &couleur);
 
 
 /**
- * @brief      { function_description }
+ * @brief      Dessine un rectangle dans l'image des dimensions passées en paramètres et de la couleur du pixel passé en paramètre
  *
  * @param[in]  Xmin     The xmin
  * @param[in]  Ymin     The ymin
@@ -102,7 +102,7 @@ void afficher();
 /**
  * @brief      Sauve l'image dans le répertoire data/
  *
- * @param[in]  filename  The filename
+ * @param[in]  filename  Le nom du fichier dans lequel sauvegarder l'image
  */
 void sauver(const std::string& filename) const;
 
@@ -115,14 +115,14 @@ void sauver(const std::string& filename) const;
 /**
  * @brief      Ouvre l'image dont le chemin est spécifié en paramètre et 
  *
- * @param[in]  filename  The filename
+ * @param[in]  filename  Le nom du fichier que l'on doit ouvrir
  */
 void ouvrir(const std::string& filename);
 
 
 
 /**
- * @brief      { function_description }
+ * @brief      Affiche dans la console
  */
 void afficherConsole();
 

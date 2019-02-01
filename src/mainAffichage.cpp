@@ -21,7 +21,10 @@ int main (int argc, char** argv) {
    image.setPix(8,1,noir);
    image.setPix(1,8,noir);
    image.setPix(8,8,noir);
- 
+   
+
+
+   // construire cette fonction
    image.afficher(); 
  
    return 0;    

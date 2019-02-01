@@ -2,59 +2,38 @@
 #include "Pixel.h"
 
 
-typedef unsigned char uchar;
 
-/**
- * @brief      Initialise un pixel avec les valeurs (0, 0, 0)
- */
+// Constructeur par défaut de la classe: initialise le pixel à la couleur noire
 Pixel::Pixel():r(0), g(0), b(0){};
 
 
 
 
-/**
- * @brief      Initialise un pixel avec les valeurs passées en paramètre
- *
- * @param[in]  nr    composante rouge du pixel
- * @param[in]  ng    composante verte du pixel
- * @param[in]  nb    composante bleu du pixel
- */
-Pixel::Pixel(uchar nr, uchar ng, uchar nb):r(nr), g(ng), b(nb){};
+// Constructeur de la classe: initialise r,g,b avec les paramètres 
+Pixel::Pixel(unsigned char nr, unsigned char ng, unsigned char nb):r(nr), g(ng), b(nb){};
 
 
 
 
-/**
- * @brief      Accesseur de la composante rouge du pixel
- *
- * @return     la valeur de la composante rouge du pixel
- */
-uchar Pixel::getRouge() const {
+
+// Accesseur : récupère la composante rouge du pixel
+unsigned char Pixel::getRouge() const {
 	return this -> r;
 }
 
 
 
 
-/**
- * @brief      Gets the vertical.
- *
- * @return     The vertical.
- */
-uchar Pixel::getVert() const {
+// Accesseur : récupère la composante verte du pixel
+unsigned char Pixel::getVert() const {
 	return this -> g;
 }
 
 
 
 
-
-/**
- * @brief      Gets the bleu.
- *
- * @return     The bleu.
- */
-uchar Pixel::getBleu() const {
+// Accesseur : récupère la composante bleue du pixel
+unsigned char Pixel::getBleu() const {
 	return this -> b;
 }
 
@@ -62,12 +41,8 @@ uchar Pixel::getBleu() const {
 
 
 
-/**
- * @brief      Sets the rouge.
- *
- * @param[in]  nr    { parameter_description }
- */
-void Pixel::setRouge(uchar nr){
+// Mutateur : modifie la composante rouge du pixel
+void Pixel::setRouge(unsigned char nr){
 	if(nr >= 0 && nr <= 255){
 		this -> r = nr;
 	}
@@ -76,13 +51,8 @@ void Pixel::setRouge(uchar nr){
 
 
 
-
-/**
- * @brief      Sets the vertical.
- *
- * @param[in]  nv    { parameter_description }
- */
-void Pixel::setVert (uchar nv){
+// Mutateur : modifie la composante verte du pixel
+void Pixel::setVert (unsigned char nv){
 	if(nv >= 0 && nv <= 255){
 		this -> g = nv;
 	}
@@ -91,13 +61,8 @@ void Pixel::setVert (uchar nv){
 
 
 
-
-/**
- * @brief      Sets the bleu.
- *
- * @param[in]  nb    The number of
- */
-void Pixel::setBleu (uchar nb){
+// Mutateur : modifie la composante bleue du pixel
+void Pixel::setBleu (unsigned char nb){
 	if(nb >= 0 && nb <= 255){
 		this -> b = nb;
 	}
