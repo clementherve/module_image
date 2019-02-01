@@ -5,7 +5,6 @@
 ###########################################
 
 
-
 ******************
 1.1 - Reprendre son travail
 ******************
@@ -92,7 +91,13 @@ doxygen doc/image.doxy
 	* doxygen
 	* dia (diagrammes de classes)
 
+
 - eventuellement, remplir le readme
+
+- Bugs avec le script d'eval du prof (evalModuleImage.py)
+	
+	* dépendances makefile ( à corriger )
+	* nom repertoire different de nom archive (bug du script, jai pas compris ????!)
 
 
 
