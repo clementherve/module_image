@@ -129,7 +129,7 @@ void Image::effacer(Pixel &couleur){
 
 
 // a mettre en privé !!!
-bool Image::init_fenetre(SDL_Window* &fenetre){
+bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
     // on force le pointeur a etre nul 
     // (il n'est pas sensé valoir autre chose a ce stade)
@@ -147,10 +147,15 @@ bool Image::init_fenetre(SDL_Window* &fenetre){
                 SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
         
+
         // si Create Window a planté, a un pointeur qui est NULL
         if(fenetre == NULL){
             return false;
         } else {
+
+
+            rendu = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_SOFTWARE);
+
             return true;
         }
 
@@ -161,13 +166,31 @@ bool Image::init_fenetre(SDL_Window* &fenetre){
 
 
 
-void Image::boucle_fenetre(){
+void Image::afficher_pixel(SDL_Renderer* &rendu, const unsigned int x, const unsigned int y, const Pixel &pix){
+    
+
+
+
+    // dessine
+    // donne une nouvelle couleur avec laquelle dessiner
+    SDL_SetRenderDrawColor(rendu, pix.getRouge(), pix.getVert(), pix.getBleu(), 255);
+    
+    // draw here
+    SDL_RenderDrawPoint(rendu, x, y);
+
+}
+
+
+
+void Image::boucle_fenetre(SDL_Renderer* &rendu){
 
     bool is_running = true;
     SDL_Event e;
 
     while(is_running){
 
+
+        // gère les évenements
         while(SDL_PollEvent(&e)){
 
             if(e.type == SDL_QUIT){
@@ -185,7 +208,31 @@ void Image::boucle_fenetre(){
                 
             }
 
+        } // fin de la gestion des évènements
+
+
+
+        // specifie un arriere plan
+        //specifie une couleur d'arriere plan (rgba)
+        SDL_SetRenderDrawColor(rendu, 50, 50, 50, 255);
+        // nettoie l'ecran avec la couleur specifiee au dessus
+        SDL_RenderClear(rendu);
+
+
+
+
+        // generation du rendu
+        for(unsigned int i=0; i<this->dimx; i++){
+            for(unsigned int j=0; j<this->dimy; j++){
+                afficher_pixel(rendu, i, j, getPix(i, j));
+            }
         }
+
+
+
+        // affiche
+        // update the screen
+        SDL_RenderPresent(rendu);
 
     }
 
@@ -193,8 +240,12 @@ void Image::boucle_fenetre(){
 
 
 
+
+
 // a mettre en privé !
-void Image::detruire_fenetre(SDL_Window* &fenetre){
+void Image::detruire_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
+
+    SDL_DestroyRenderer(rendu);
     SDL_DestroyWindow(fenetre);
     SDL_Quit();
 }
@@ -206,12 +257,13 @@ void Image::afficher(){
 
 
     SDL_Window* fenetre = NULL;
+    SDL_Renderer* rendu = NULL;
 
-    if(init_fenetre(fenetre)){
+    if(init_fenetre(fenetre, rendu)){
         std::cout << "fenetre initialisee !\n";
 
 
-        boucle_fenetre();
+        boucle_fenetre(rendu);
 
         // cette partie est à remplacer par la boucle de gestion d'evenements
         // SDL_Surface* screenSurface = SDL_GetWindowSurface(fenetre);
@@ -221,7 +273,7 @@ void Image::afficher(){
 
 
 
-        detruire_fenetre(fenetre);
+        detruire_fenetre(fenetre, rendu);
     } else {
         std::cout << "il y a eu un probleme !\n";
     }   

@@ -96,13 +96,32 @@ void effacer(Pixel &couleur);
  *
  * @return     True si tout c'est bien passé, false si il y a eu un problème
  */
-bool init_fenetre(SDL_Window* &fenetre);
+bool init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu);
 
 
 
 
 
-void boucle_fenetre();
+/**
+ * @brief      { function_description }
+ *
+ * @param      rendu  The rendu
+ * @param[in]  x      { parameter_description }
+ * @param[in]  y      { parameter_description }
+ * @param[in]  pix    The pix
+ */
+void afficher_pixel(SDL_Renderer* &rendu, const unsigned int x, const unsigned int y, const Pixel &pix);
+
+
+
+
+
+/**
+ * @brief      { function_description }
+ *
+ * @param      rendu  The rendu
+ */
+void boucle_fenetre(SDL_Renderer* &rendu);
 
 
 
@@ -111,7 +130,7 @@ void boucle_fenetre();
  *
  * @param      fenetre  un pointeur sur l'objet fenetre
  */
-void detruire_fenetre(SDL_Window* &fenetre);
+void detruire_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu);
 
 
 
