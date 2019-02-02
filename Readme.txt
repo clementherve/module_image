@@ -6,9 +6,11 @@
 
 
 
-valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v [nom fichier]
+valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v bin/test
 
-valgrind_lif7.supp
+
+valgrind --tool=memcheck --suppressions=./valgrind_lif7.supp --leak-check=summary bin/test
+'', '--suppressions=./valgrind_lif7.supp', '--show-reachable=yes', '--leak-check=summary'
 
 
 ******************

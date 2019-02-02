@@ -5,7 +5,7 @@ int main() {
 
    Pixel pix(5, 6, 7);
    monImage.dessinerRectangle(0, 0, 2, 2, pix);
-   monImage.afficher();
+   monImage.afficher(); //memory leaks
    monImage.testRegression();
    return 0;
 }

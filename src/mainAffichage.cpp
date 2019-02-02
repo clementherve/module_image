@@ -25,7 +25,8 @@ int main (int argc, char** argv) {
 
 
    // construire cette fonction
-   image.afficher(); 
+   image.afficher();
+   // image.sauver("data/smiley.ppm");
  
    return 0;    
 }

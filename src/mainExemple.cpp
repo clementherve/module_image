@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
    image1.dessinerRectangle(10, 5, 25, 10, rose);
    image1.setPix(2,2,rose);
    image1.sauver("./data/image1.ppm");
-   image1.afficher();
+   image1.afficher(); // memory leaks
  
    Image image2;
    image2.ouvrir("./data/image1.ppm");

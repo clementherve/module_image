@@ -134,7 +134,7 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
     // on force le pointeur a etre nul 
     // (il n'est pas sensé valoir autre chose a ce stade)
     fenetre = NULL;
-
+    rendu = NULL;
 
     // la fonction d'initialisation renvoit 0 si tout s'est bien passé
     if(SDL_InitSubSystem(SDL_INIT_EVERYTHING) == 0){
@@ -152,10 +152,7 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
         if(fenetre == NULL){
             return false;
         } else {
-
-
             rendu = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_SOFTWARE);
-
             return true;
         }
 
@@ -247,6 +244,10 @@ void Image::detruire_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
     SDL_DestroyRenderer(rendu);
     SDL_DestroyWindow(fenetre);
+
+    rendu = NULL;
+    fenetre = NULL;
+
     SDL_Quit();
 }
 
@@ -260,24 +261,9 @@ void Image::afficher(){
     SDL_Renderer* rendu = NULL;
 
     if(init_fenetre(fenetre, rendu)){
-        std::cout << "fenetre initialisee !\n";
-
-
         boucle_fenetre(rendu);
-
-        // cette partie est à remplacer par la boucle de gestion d'evenements
-        // SDL_Surface* screenSurface = SDL_GetWindowSurface(fenetre);
-        // SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF)); 
-        // SDL_UpdateWindowSurface(fenetre);
-        // SDL_Delay(5000);
-
-
-
         detruire_fenetre(fenetre, rendu);
-    } else {
-        std::cout << "il y a eu un probleme !\n";
-    }   
-     // SDL goes here
+    }
 
 }
 
@@ -285,7 +271,6 @@ void Image::afficher(){
 
 
 
-// 
 void Image::sauver(const std::string& filename) const {
     
     std::ofstream fichier(filename.c_str());
@@ -300,7 +285,7 @@ void Image::sauver(const std::string& filename) const {
         
         for(unsigned int x=0; x<this->dimx; x++){
             Pixel& pix = getPix(x,y); // permet d'éviter d'accéder 3 fois au pixel, on y accède une fois, et ensuite on travaille sur une référence (pix)
-            fichier << pix.getRouge() << " " << pix.getVert() << " " << pix.getBleu() << " ";
+            fichier << (int) pix.getRouge() << " " << (int) pix.getVert() << " " << (int) pix.getBleu() << " ";
         }
 
     }
@@ -337,14 +322,11 @@ void Image::ouvrir(const std::string& filename) {
         delete [] tab;
     }
 
-    tab = new Pixel[this->dimx*this->dimy];
+    this->tab = new Pixel[this->dimx*this->dimy];
     
     for(unsigned int y=0; y < this->dimy; ++y){
         for(unsigned int x=0; x < this->dimx; ++x){
             fichier >> r >> b >> g;
-
-            std::cout << "(" << x << "," << y << ") = " << (int) r << " " << (int) g << " " << (int) b << "\n";
-
             (this -> getPix(x,y)).setRouge(r);
             (this -> getPix(x,y)).setVert(g);
             (this -> getPix(x,y)).setBleu(b);
