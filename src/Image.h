@@ -1,4 +1,6 @@
 #pragma once
+
+#include <SDL2/SDL.h>  
 #include <string>
 #include "Pixel.h"
 
@@ -86,6 +88,30 @@ void effacer(Pixel &couleur);
 
 
 
+
+/**
+ * @brief      Initialise une fenetre passée en référence
+ *
+ * @param      fenetre Un pointeur sur l'objet fenetre
+ *
+ * @return     True si tout c'est bien passé, false si il y a eu un problème
+ */
+bool init_fenetre(SDL_Window* &fenetre);
+
+
+
+
+
+void boucle_fenetre();
+
+
+
+/**
+ * @brief      Détruit l'objet fenetre et libère la mémoire
+ *
+ * @param      fenetre  un pointeur sur l'objet fenetre
+ */
+void detruire_fenetre(SDL_Window* &fenetre);
 
 
 

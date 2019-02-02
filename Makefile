@@ -15,29 +15,29 @@ all : bin/affichage bin/exemple bin/test
 
 # exécutables
 bin/affichage : obj/mainAffichage.o obj/Pixel.o obj/Image.o
-	g++ $(Cflags) obj/mainAffichage.o obj/Pixel.o obj/Image.o -o bin/affichage
+	g++ $(Cflags) obj/mainAffichage.o obj/Pixel.o obj/Image.o -o bin/affichage $(Clib)
 
 
 bin/exemple : obj/mainExemple.o obj/Pixel.o obj/Image.o
-	g++ $(Cflags) obj/mainExemple.o obj/Pixel.o obj/Image.o -o bin/exemple
+	g++ $(Cflags) obj/mainExemple.o obj/Pixel.o obj/Image.o -o bin/exemple $(Clib)
 
 
 bin/test : obj/mainTest.o obj/Pixel.o obj/Image.o
-	g++ $(Cflags) obj/mainTest.o obj/Pixel.o obj/Image.o -o bin/test
+	g++ $(Cflags) obj/mainTest.o obj/Pixel.o obj/Image.o -o bin/test $(Clib)
 
 
 
 # Les différents main exigés
 obj/mainAffichage.o : src/mainAffichage.cpp obj/Image.o
-	g++ $(Cflags) -c src/mainAffichage.cpp -o obj/mainAffichage.o
+	g++ $(Cflags) -c src/mainAffichage.cpp -o obj/mainAffichage.o $(Clib)
 
 
 obj/mainExemple.o : src/mainExemple.cpp obj/Image.o
-	g++ $(Cflags) -c src/mainExemple.cpp -o obj/mainExemple.o
+	g++ $(Cflags) -c src/mainExemple.cpp -o obj/mainExemple.o $(Clib)
 
 
 obj/mainTest.o : src/mainTest.cpp obj/Image.o
-	g++ $(Cflags) -c src/mainTest.cpp -o obj/mainTest.o
+	g++ $(Cflags) -c src/mainTest.cpp -o obj/mainTest.o $(Clib)
 
 
 

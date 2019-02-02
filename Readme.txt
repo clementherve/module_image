@@ -80,8 +80,6 @@ doxygen doc/image.doxy
 ###########################################
 
 
-- basculer la doc de pixel.cpp dans pixel.h et vice-verça
-- résoudre les problèmes d'exécution dans main/affichage & main/exemple
 - résoudre le problème de dépendances mal gérées (Makefile)
 - continuer à se documenter sur :
 	
@@ -96,7 +94,6 @@ doxygen doc/image.doxy
 
 - Bugs avec le script d'eval du prof (evalModuleImage.py)
 	
-	* dépendances makefile ( à corriger )
 	* nom repertoire different de nom archive (bug du script, jai pas compris ????!)
 
 

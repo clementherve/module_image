@@ -1,6 +1,8 @@
 // Librairies externes
 #include <iostream>
 #include <cassert>
+#include <SDL2/SDL.h>
+
 #include <fstream>
 
 
@@ -14,7 +16,7 @@
 // 
 Image::Image(): dimx(0), dimy(0){
     this->tab = NULL;
-};
+}
 
 
 
@@ -126,10 +128,104 @@ void Image::effacer(Pixel &couleur){
 
 
 
+// a mettre en privé !!!
+bool Image::init_fenetre(SDL_Window* &fenetre){
+
+    // on force le pointeur a etre nul 
+    // (il n'est pas sensé valoir autre chose a ce stade)
+    fenetre = NULL;
+
+
+    // la fonction d'initialisation renvoit 0 si tout s'est bien passé
+    if(SDL_InitSubSystem(SDL_INIT_EVERYTHING) == 0){
+        fenetre = SDL_CreateWindow(
+                "Module Image", 
+                SDL_WINDOWPOS_UNDEFINED, 
+                SDL_WINDOWPOS_UNDEFINED, 
+                200, 
+                200, 
+                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+
+        
+        // si Create Window a planté, a un pointeur qui est NULL
+        if(fenetre == NULL){
+            return false;
+        } else {
+            return true;
+        }
+
+    } else {
+        return false;
+    }
+}
+
+
+
+void Image::boucle_fenetre(){
+
+    bool is_running = true;
+    SDL_Event e;
+
+    while(is_running){
+
+        while(SDL_PollEvent(&e)){
+
+            if(e.type == SDL_QUIT){
+                is_running = false;
+            } else if(e.type == SDL_KEYDOWN){
+                
+                std::string letter = SDL_GetKeyName(e.key.keysym.sym);
+
+                if(letter == "T"){
+                    SDL_Log("T");
+                } else if(letter == "G"){
+                    SDL_Log("G");
+                }
+
+                
+            }
+
+        }
+
+    }
+
+}
+
+
+
+// a mettre en privé !
+void Image::detruire_fenetre(SDL_Window* &fenetre){
+    SDL_DestroyWindow(fenetre);
+    SDL_Quit();
+}
+
+
+
 // 
 void Image::afficher(){
 
-    // SDL goes here
+
+    SDL_Window* fenetre = NULL;
+
+    if(init_fenetre(fenetre)){
+        std::cout << "fenetre initialisee !\n";
+
+
+        boucle_fenetre();
+
+        // cette partie est à remplacer par la boucle de gestion d'evenements
+        // SDL_Surface* screenSurface = SDL_GetWindowSurface(fenetre);
+        // SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF)); 
+        // SDL_UpdateWindowSurface(fenetre);
+        // SDL_Delay(5000);
+
+
+
+        detruire_fenetre(fenetre);
+    } else {
+        std::cout << "il y a eu un probleme !\n";
+    }   
+     // SDL goes here
 
 }
 
@@ -232,7 +328,7 @@ void Image::afficherConsole(){
 void Image::testRegression(){
 
     // un pixel utilisé dans les tests
-    Pixel pixy(5, 5, 5);
+   /* Pixel pixy(5, 5, 5);
     Image* img = NULL;
 
 
@@ -290,5 +386,5 @@ void Image::testRegression(){
     std::cout << "ok\n";
 
     delete img;
-    img = NULL;
+    img = NULL;*/
 }
