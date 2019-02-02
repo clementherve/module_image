@@ -13,7 +13,7 @@ Pixel::Pixel():r(0), g(0), b(0){};
 Pixel::Pixel(unsigned char nr, unsigned char ng, unsigned char nb):r(nr), g(ng), b(nb){};
 
 
-
+// 
 
 
 // Accesseur : récupère la composante rouge du pixel

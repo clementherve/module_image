@@ -5,6 +5,12 @@
 ###########################################
 
 
+
+valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v [nom fichier]
+
+valgrind_lif7.supp
+
+
 ******************
 1.1 - Reprendre son travail
 ******************

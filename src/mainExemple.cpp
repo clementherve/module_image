@@ -4,24 +4,24 @@ int main(int argc, char** argv) {
 
 
    // TEST
-   Image image3(4, 4);
+   // Image image3(4, 4);
 
-   Pixel rose (255, 128, 255);
-   image3.dessinerRectangle(1, 1, 2, 2, rose);
+   // Pixel rose (255, 128, 255);
+   // image3.dessinerRectangle(1, 1, 2, 2, rose);
 
-   image3.afficherConsole();
-   image3.sauver("./data/image3.ppm");
+   // image3.afficherConsole();
+   // image3.sauver("./data/image3.ppm");
 
 
-   Image image4;
-   image4.ouvrir("./data/image3.ppm");
-   image4.afficherConsole();
+   // Image image4;
+   // image4.ouvrir("./data/image3.ppm");
+   // image4.afficherConsole();
 
    // Pixel rose (255, 128, 255);
    // image2.dessinerRectangle(0, 0, 2, 2, rose);
    // image2.afficherConsole();
    // FIN TEST
-/*
+
 
    Pixel orange (255, 128, 0);
    Pixel rose (255, 128, 255);
@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
    image1.dessinerRectangle(10, 5, 25, 10, rose);
    image1.setPix(2,2,rose);
    image1.sauver("./data/image1.ppm");
+   image1.afficher();
  
    Image image2;
    image2.ouvrir("./data/image1.ppm");
@@ -39,6 +40,7 @@ int main(int argc, char** argv) {
    image2.dessinerRectangle(25, 25, 35, 45, bleu);
    image2.sauver("./data/image2.ppm");
    image2.afficherConsole();
- */
+   
+
    return 0;    
 }

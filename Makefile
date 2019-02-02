@@ -1,4 +1,4 @@
-# Indique à make de ne pas éxecuter clean sauf mention contraire
+# Indique à make de ne pas exécuter clean sauf mention contraire
 .PHONY : clean
 
 
@@ -11,6 +11,8 @@ Clib = -L/usr/include/ -lSDL2main -lSDL2
 
 # Construit tous les main
 all : bin/affichage bin/exemple bin/test
+
+
 
 
 # exécutables
@@ -28,30 +30,32 @@ bin/test : obj/mainTest.o obj/Pixel.o obj/Image.o
 
 
 # Les différents main exigés
-obj/mainAffichage.o : src/mainAffichage.cpp obj/Image.o
+obj/mainAffichage.o : src/mainAffichage.cpp src/Image.h src/Pixel.h
 	g++ $(Cflags) -c src/mainAffichage.cpp -o obj/mainAffichage.o $(Clib)
 
 
-obj/mainExemple.o : src/mainExemple.cpp obj/Image.o
+obj/mainExemple.o : src/mainExemple.cpp src/Image.h src/Pixel.h
 	g++ $(Cflags) -c src/mainExemple.cpp -o obj/mainExemple.o $(Clib)
 
 
-obj/mainTest.o : src/mainTest.cpp obj/Image.o
+obj/mainTest.o : src/mainTest.cpp src/Image.h src/Pixel.h
 	g++ $(Cflags) -c src/mainTest.cpp -o obj/mainTest.o $(Clib)
+
+
 
 
 
 # Les classes de base
 obj/Pixel.o : src/Pixel.cpp src/Pixel.h
-	g++ -c src/Pixel.cpp -o obj/Pixel.o $(Clib)
+	g++ $(Cflags) -c src/Pixel.cpp -o obj/Pixel.o $(Clib)
 
 
-obj/Image.o : src/Image.cpp src/Image.h src/Pixel.cpp src/Pixel.h
+obj/Image.o : src/Image.cpp src/Image.h src/Pixel.h
 	g++ $(Cflags) -c src/Image.cpp -o obj/Image.o $(Clib)
+
 
 
 
 # Enlève les fichiers intermédiaires
 clean : 
-	rm -f obj/*
-	rm -f bin/*
+	rm -f obj/* bin/* data/*
