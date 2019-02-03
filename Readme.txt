@@ -88,7 +88,6 @@ doxygen doc/image.doxy
 ###########################################
 
 
-- résoudre le problème de dépendances mal gérées (Makefile)
 - continuer à se documenter sur :
 	
 	* valgrind
@@ -99,11 +98,6 @@ doxygen doc/image.doxy
 
 
 - eventuellement, remplir le readme
-
-- Bugs avec le script d'eval du prof (evalModuleImage.py)
-	
-	* nom repertoire different de nom archive (bug du script, jai pas compris ????!)
-
 
 
 
