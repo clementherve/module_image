@@ -205,7 +205,10 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
                 std::string letter = SDL_GetKeyName(e.key.keysym.sym);
 
                 if(letter == "T"){
-                    scale += 1.0;
+                    std::cout << scale << std::endl;
+                    if(scale < 20.0){
+                        scale += 1.0;
+                    }
                     SDL_RenderSetScale(rendu, scale, scale);
                 } else if(letter == "G"){
                     if(scale > 1.0){
@@ -230,13 +233,33 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
 
         /*
             centrage: [Son indice] + ((DimFenetreY - DimImageY) /2 * DimFenetreX) + ((DimFenetreX  - DimImageX) / 2) 
+
+
+
+
+                http://lazyfoo.net/tutorials/SDL/15_rotation_and_flipping/index.php
+
+                //Clear screen
+                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                SDL_RenderClear( gRenderer );
+
+                //Render arrow
+                gArrowTexture.render( ( SCREEN_WIDTH - gArrowTexture.getWidth() ) / 2, ( SCREEN_HEIGHT - gArrowTexture.getHeight() ) / 2, NULL, degrees, NULL, flipType );
+
+                //Update screen
+                SDL_RenderPresent( gRenderer );
+                Here we do the actual rendering. First we pass in the x and y coordinates. That may seem like a complicated equation, but all it does is center the image. If the image is 440 pixels wide on a 640 pixel wide screen, we want it to be padded by 100 pixels on each side. In other words, the x coordinate will be the screen width (640) minus the image width (440) all divided by 2 ( (640 - 440 ) / 2 = 100).
+
+                The next argument is the clip rectangle and since we're rendering the whole texture it is set to null. The next argument is the rotation angle in degrees. The next argument is the point we're rotation around. When this is null, it will rotate around the center of the image. The last argument is how the image flipped.
+
+                The best way to wrap your mind around how to use rotation is to play around with it. Experiment to see the type of effects you get by combining different rotations/flipping. 
         */
 
 
         // generation du rendu
         for(unsigned int i=0; i<this->dimx; i++){
             for(unsigned int j=0; j<this->dimy; j++){
-                afficher_pixel(rendu, i + (200 - dimx)/(2*scale), j + (200 - dimy)/(2*scale), getPix(i, j));
+                afficher_pixel(rendu, i + (200 - dimx*scale)/(2*scale), j + (200 - dimy*scale)/(2*scale), getPix(i, j));
             }
         }
 
