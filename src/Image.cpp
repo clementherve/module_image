@@ -80,6 +80,8 @@ Pixel& Image::getPix(const unsigned int x, const unsigned int y) const{
 
 
 
+
+
 // Mutateur : modifie le pixel de coordonnées (x,y)
 void Image::setPix(const unsigned int x, const unsigned int y, const Pixel &couleur){
 
@@ -166,8 +168,6 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 void Image::afficher_pixel(SDL_Renderer* &rendu, const unsigned int x, const unsigned int y, const Pixel &pix){
     
 
-
-
     // dessine
     // donne une nouvelle couleur avec laquelle dessiner
     SDL_SetRenderDrawColor(rendu, pix.getRouge(), pix.getVert(), pix.getBleu(), 255);
@@ -184,7 +184,15 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
     bool is_running = true;
     SDL_Event e;
 
+    float scale = 1.0;
+
     while(is_running){
+
+
+
+        /*
+            centrage: [Son indice] + ((DimFenetreY - DimImageY) /2 * DimFenetreX) + ((DimFenetreX  - DimImageX) / 2) 
+        */
 
 
         // gère les évenements
@@ -197,9 +205,13 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
                 std::string letter = SDL_GetKeyName(e.key.keysym.sym);
 
                 if(letter == "T"){
-                    SDL_Log("T");
+                    scale += 1.0;
+                    SDL_RenderSetScale(rendu, scale, scale);
                 } else if(letter == "G"){
-                    SDL_Log("G");
+                    if(scale > 1.0){
+                        scale -= 1.0;
+                        SDL_RenderSetScale(rendu, scale, scale);
+                    }
                 }
 
                 
@@ -216,12 +228,15 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
         SDL_RenderClear(rendu);
 
 
+        /*
+            centrage: [Son indice] + ((DimFenetreY - DimImageY) /2 * DimFenetreX) + ((DimFenetreX  - DimImageX) / 2) 
+        */
 
 
         // generation du rendu
         for(unsigned int i=0; i<this->dimx; i++){
             for(unsigned int j=0; j<this->dimy; j++){
-                afficher_pixel(rendu, i, j, getPix(i, j));
+                afficher_pixel(rendu, i + (200 - dimx)/(2*scale), j + (200 - dimy)/(2*scale), getPix(i, j));
             }
         }
 
@@ -230,7 +245,6 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
         // affiche
         // update the screen
         SDL_RenderPresent(rendu);
-
     }
 
 }

@@ -1,3 +1,9 @@
+important:
+
+tester si il y a bien le bon nombre de lignes quand on genere une image / un rectangle
+tester si le script python test bien seulement bin/test pour valgrind
+
+
 ###########################################
 #####
 #####	MEMO GITHUB
@@ -7,10 +13,7 @@
 
 
 valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v bin/test
-
-
 valgrind --tool=memcheck --suppressions=./valgrind_lif7.supp --leak-check=summary bin/test
-'', '--suppressions=./valgrind_lif7.supp', '--show-reachable=yes', '--leak-check=summary'
 
 
 ******************
@@ -100,7 +103,7 @@ doxygen doc/image.doxy
 - eventuellement, remplir le readme
 
 
-
+Readme.txt est un fichier texte expliquant la librairie. Au minimum comment compiler et exécuter, ce que fait le module et chacun des exécutables, l'organisation de l'archive etc. et il doit indiquer les noms/prénoms/numéros des étudiants.
 
 
 ###########################################
