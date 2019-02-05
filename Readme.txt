@@ -113,5 +113,5 @@ Readme.txt est un fichier texte expliquant la librairie. Au minimum comment comp
 ###########################################
 
 HERVE Clément 11615530
-BRUNET Gautier 11208117
+BRUNET Gauthier 11208117
 TEIXEIRA MAGALHAES Tiago 11414551
