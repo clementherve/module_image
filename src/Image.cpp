@@ -139,11 +139,11 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
     rendu = NULL;
 
     // la fonction d'initialisation renvoit 0 si tout s'est bien passé
-    if(SDL_InitSubSystem(SDL_INIT_EVERYTHING) == 0){
+    if(SDL_InitSubSystem(SDL_INIT_VIDEO) == 0){
         fenetre = SDL_CreateWindow(
                 "Module Image", 
-                SDL_WINDOWPOS_UNDEFINED, 
-                SDL_WINDOWPOS_UNDEFINED, 
+                SDL_WINDOWPOS_CENTERED, 
+                SDL_WINDOWPOS_CENTERED, 
                 200, 
                 200, 
                 SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
@@ -168,7 +168,6 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 void Image::afficher_pixel(SDL_Renderer* &rendu, const unsigned int x, const unsigned int y, const Pixel &pix){
     
 
-    // dessine
     // donne une nouvelle couleur avec laquelle dessiner
     SDL_SetRenderDrawColor(rendu, pix.getRouge(), pix.getVert(), pix.getBleu(), 255);
     
@@ -234,9 +233,6 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
         /*
             centrage: [Son indice] + ((DimFenetreY - DimImageY) /2 * DimFenetreX) + ((DimFenetreX  - DimImageX) / 2) 
 
-
-
-
                 http://lazyfoo.net/tutorials/SDL/15_rotation_and_flipping/index.php
 
                 //Clear screen
@@ -259,10 +255,9 @@ void Image::boucle_fenetre(SDL_Renderer* &rendu){
         // generation du rendu
         for(unsigned int i=0; i<this->dimx; i++){
             for(unsigned int j=0; j<this->dimy; j++){
-                afficher_pixel(rendu, i + (200 - dimx*scale)/(2*scale), j + (200 - dimy*scale)/(2*scale), getPix(i, j));
+                afficher_pixel(rendu, i + (500 - dimx*scale)/(2*scale), j + (500 - dimy*scale)/(2*scale), getPix(i, j));
             }
         }
-
 
 
         // affiche
@@ -352,7 +347,7 @@ void Image::ouvrir(const std::string& filename) {
     fichier >> mot >> this->dimx >> this->dimy >> mot;
 
     std::cout << this->dimx << "; " << this->dimy << "\n";
-    
+
     assert(this->dimx > 0 && this->dimy > 0);
     
     if (tab != NULL){
@@ -361,8 +356,10 @@ void Image::ouvrir(const std::string& filename) {
 
     this->tab = new Pixel[this->dimx*this->dimy];
     
-    for(unsigned int y=0; y < this->dimy; ++y){
-        for(unsigned int x=0; x < this->dimx; ++x){
+
+    // y et x ??????
+    for(unsigned int y=0; y < this->dimy; y++){
+        for(unsigned int x=0; x < this->dimx; x++){
             fichier >> r >> b >> g;
             (this -> getPix(x,y)).setRouge(r);
             (this -> getPix(x,y)).setVert(g);
