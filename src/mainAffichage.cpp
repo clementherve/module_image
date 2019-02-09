@@ -1,6 +1,8 @@
 #include "Image.h"
 #include "Pixel.h"
- 
+
+
+// Affichage d'une image générée à la volée
 int main (int argc, char** argv) {
  
    Image image(10,10);
@@ -23,10 +25,7 @@ int main (int argc, char** argv) {
    image.setPix(8,8,noir);
    
 
-
-   // construire cette fonction
    image.afficher();
-   // image.sauver("data/smiley.ppm");
  
    return 0;    
 }

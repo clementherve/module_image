@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boucle_5ffenetre',['boucle_fenetre',['../classImage.html#a9ef7b570d6b8915b743e26a9c59a548c',1,'Image']]]
+  ['dessinerrectangle',['dessinerRectangle',['../classImage.html#a9b2e51438870656db6f84bae5cfa74c8',1,'Image']]]
 ];
