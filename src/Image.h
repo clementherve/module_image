@@ -104,7 +104,7 @@ Image();
  * @param[in]  dimensionX  La largeur de l'image
  * @param[in]  dimensionY  La hauteur de l'image
  */
-Image(const unsigned int dimensionX, const unsigned int dimensionY);
+Image(const int dimensionX, const int dimensionY);
 
 
 

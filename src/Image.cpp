@@ -1,56 +1,63 @@
-// Librairies externes
 #include <iostream>
 #include <cassert>
 #include <SDL2/SDL.h>
-
 #include <fstream>
+#include <math.h>
 
-
-// Header de Image.h
 #include "Image.h"
 
 
-// 
-// Constructeur par défaut de la classe: initialise dimx et dimy à 0
-// ce constructeur n'alloue pas de pixel
-// 
+//
+// Constructeur par défaut de la classe: initialise dimx et dimy à 0 ce
+// constructeur n'alloue pas de pixel
+//
 Image::Image(): dimx(0), dimy(0){
     this -> tab = NULL;
     this -> noir = new Pixel(0, 0, 0);
 }
 
 
+
 // 
-
-
-
 // Constructeur de la classe: initialise dimx et dimy (après vérification)
 // puis alloue le tableau de pixel dans le tas (image noire)
-Image::Image(const unsigned int dimensionX, const unsigned int dimensionY){
+// 
+Image::Image(const int dimensionX, const int dimensionY){
+
+    if(dimensionX > 0 && dimensionY > 0){
 
 
+        if(dimensionX > 500){
+            this -> dimx = 500;
+        } else {
+            this -> dimx = dimensionX;
+        }
 
-    if(dimensionX > 0 && dimensionY > 0 && dimensionX < 500 && dimensionY < 500){
-        
-        this -> dimx = dimensionX;
-        this -> dimy = dimensionY;
+        if(dimensionY > 500){
+            this -> dimy = 500;
+        } else {
+            this -> dimy = dimensionY;
+        }
 
-        
+
+        assert(dimx > 0 && dimx <= 500);
+        assert(dimy > 0 && dimy <= 500);
+
+
+        this -> tab = new Pixel[(this -> dimx)*(this -> dimy)];
+        this -> noir = new Pixel(0, 0, 0);
+
     } else {
 
-        this -> dimx = 1;
-        this -> dimy = 1;
+        // Dans le cas où soit dimx soit dimy sont égaux à 0, les deux valent 0
+        this -> dimx = 0;
+        this -> dimy = 0;
+        this -> tab = NULL;
+        this -> noir = new Pixel(0, 0, 0);
 
     }
 
-    const unsigned int dim = (this -> dimx)*(this -> dimy);
 
-    assert(dimx > 0 && dimx < 1000);
-    assert(dimy > 0 && dimy < 1000);
-    assert(dim > 0);
-
-    this -> tab = new Pixel[dim];
-    this -> noir = new Pixel(0, 0, 0);
 }
 
 
@@ -168,7 +175,7 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
         
 
-        // si Create Window a planté, a un pointeur qui est NULL
+        // si Create Window a planté, on a un pointeur qui est NULL
         if(fenetre == NULL){
             return false;
         } else {
@@ -186,10 +193,8 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 void Image::ajoute_pixel(SDL_Renderer* &rendu, const unsigned int x, const unsigned int y, const Pixel &pix){
     
 
-    // donne une nouvelle couleur avec laquelle dessiner
+    // donne une nouvelle couleur avec laquelle dessiner puis dessine
     SDL_SetRenderDrawColor(rendu, pix.getRouge(), pix.getVert(), pix.getBleu(), 255);
-    
-    // draw here
     SDL_RenderDrawPoint(rendu, x, y);
 
 }
@@ -216,18 +221,16 @@ void Image::boucle_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
                 std::string letter = SDL_GetKeyName(e.key.keysym.sym);
 
                 if(letter == "T"){
-                    // std::cout << scale << std::endl;
                     if(scale < 20.0){
-                        scale += 0.1;
+                        scale += 1.0;
+                        SDL_RenderSetScale(rendu, scale, scale);
                     }
-                    SDL_RenderSetScale(rendu, scale, scale);
                 } else if(letter == "G"){
-                    if(scale > 0.1){
-                        scale -= 0.1;
+                    if(scale > 1.0){
+                        scale -= 1.0;
                         SDL_RenderSetScale(rendu, scale, scale);
                     }
                 }
-
                 
             }
 
@@ -236,12 +239,12 @@ void Image::boucle_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
 
         // specifie un arriere plan
-        //specifie une couleur d'arriere plan (rgba)
+        // specifie une couleur d'arriere plan (rgba)
         SDL_SetRenderDrawColor(rendu, 50, 50, 50, 255);
         // nettoie l'ecran avec la couleur specifiee au dessus
         SDL_RenderClear(rendu);
 
-        
+        // recupere la taille de la fenetre pour le centrage dynamique
         SDL_GetWindowSize(fenetre, &xSize, &ySize);
         // generation du rendu
         for(unsigned int i=0; i<this->dimx; i++){
@@ -251,8 +254,7 @@ void Image::boucle_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
         }
 
 
-        // affiche
-        // update the screen
+        // affichage
         SDL_RenderPresent(rendu);
     }
 
@@ -300,9 +302,9 @@ void Image::sauver(const std::string& filename) const {
     
     std::ofstream fichier(filename.c_str());
     
-    // assert(fichier.is_open());
-
     if(fichier.is_open()){
+
+        assert(fichier.is_open());
 
         fichier << "P3\n";
         fichier << this->dimx << " " << this->dimy << "\n";
@@ -332,9 +334,9 @@ void Image::ouvrir(const std::string& filename) {
     
     std::ifstream fichier(filename.c_str());
     
-    // assert(fichier.is_open());
-
     if(fichier.is_open()){
+
+        assert(fichier.is_open());
 
         unsigned int nr, ng, nb;
         std::string mot;
@@ -344,7 +346,7 @@ void Image::ouvrir(const std::string& filename) {
         
         fichier >> mot >> this->dimx >> this->dimy >> mot;
 
-        std::cout << this->dimx << "; " << this->dimy << "\n";
+        std::cout << this->dimx << " x " << this->dimy << "\n";
 
         assert(this->dimx > 0 && this->dimy > 0);
         
@@ -406,7 +408,7 @@ void Image::testRegression(){
     std::cout << "[TEST 1]\n";
     std::cout << "img = new Image(-1, 1)\n";
     img = new Image(-1, 1);
-    
+        
     // setpix (normal)
     std::cout << "setpix(2, 2)\n";
     img -> setPix(2, 2, pixy);
@@ -486,7 +488,7 @@ void Image::testRegression(){
     std::cout << "[TEST 2]\n";
     std::cout << "img = new Image(-1, -1)\n";
     img = new Image(-1, -1);
-    
+
 
     // setpix
     std::cout << "setpix(2, 2)\n";
