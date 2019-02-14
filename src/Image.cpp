@@ -1,8 +1,7 @@
-#include <iostream>
+#include <iostream> // also include <string>
 #include <cassert>
 #include <SDL2/SDL.h>
 #include <fstream>
-#include <math.h>
 
 #include "Image.h"
 
@@ -18,10 +17,10 @@ Image::Image(): dimx(0), dimy(0){
 
 
 
-// 
+//
 // Constructeur de la classe: initialise dimx et dimy (après vérification)
 // puis alloue le tableau de pixel dans le tas (image noire)
-// 
+//
 Image::Image(const int dimensionX, const int dimensionY){
 
     if(dimensionX > 0 && dimensionY > 0){
@@ -100,7 +99,10 @@ Pixel& Image::getPix(const unsigned int x, const unsigned int y) const{
 
 
 // Mutateur : modifie le pixel de coordonnées (x,y)
-void Image::setPix(const unsigned int x, const unsigned int y, const Pixel &couleur){
+void Image::setPix(
+    const unsigned int x,
+    const unsigned int y,
+    const Pixel &couleur){
 
 	if(x >= 0 && y >= 0 && x < this -> dimx && y < this -> dimy){
 
@@ -116,8 +118,13 @@ void Image::setPix(const unsigned int x, const unsigned int y, const Pixel &coul
 
 
 // Dessine un rectangle plein de la couleur dans l'image (en utilisant setPix, indices en paramètre compris)
-void Image::dessinerRectangle(const unsigned int Xmin, const unsigned int Ymin, const unsigned int Xmax, const unsigned int Ymax, const Pixel &couleur){
-    
+void Image::dessinerRectangle(
+    const unsigned int Xmin,
+    const unsigned int Ymin,
+    const unsigned int Xmax,
+    const unsigned int Ymax,
+    const Pixel &couleur){
+
 
 
     if(Xmin >= 0 && Ymin >= 0 && Xmin < Xmax && Ymin < Ymax){
@@ -148,7 +155,7 @@ void Image::dessinerRectangle(const unsigned int Xmin, const unsigned int Ymin, 
 
 
 
-// 
+//
 void Image::effacer(Pixel &couleur){
     dessinerRectangle(0, 0, this->dimx-1, this->dimy-1, couleur);
 }
@@ -158,7 +165,7 @@ void Image::effacer(Pixel &couleur){
 
 bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
-    // on force le pointeur a etre nul 
+    // on force le pointeur a etre nul
     // (il n'est pas sensé valoir autre chose a ce stade)
     fenetre = NULL;
     rendu = NULL;
@@ -166,14 +173,14 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
     // la fonction d'initialisation renvoit 0 si tout s'est bien passé
     if(SDL_InitSubSystem(SDL_INIT_VIDEO) == 0){
         fenetre = SDL_CreateWindow(
-                "Module Image", 
-                SDL_WINDOWPOS_CENTERED, 
-                SDL_WINDOWPOS_CENTERED, 
-                200, 
-                200, 
+                "Module Image",
+                SDL_WINDOWPOS_CENTERED,
+                SDL_WINDOWPOS_CENTERED,
+                200,
+                200,
                 SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
-        
+
 
         // si Create Window a planté, on a un pointeur qui est NULL
         if(fenetre == NULL){
@@ -190,13 +197,15 @@ bool Image::init_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
 
 
-void Image::ajoute_pixel(SDL_Renderer* &rendu, const unsigned int x, const unsigned int y, const Pixel &pix){
-    
+void Image::ajoute_pixel(
+    SDL_Renderer* &rendu,
+    const unsigned int x,
+    const unsigned int y,
+    const Pixel &pix){
 
     // donne une nouvelle couleur avec laquelle dessiner puis dessine
     SDL_SetRenderDrawColor(rendu, pix.getRouge(), pix.getVert(), pix.getBleu(), 255);
     SDL_RenderDrawPoint(rendu, x, y);
-
 }
 
 
@@ -217,7 +226,7 @@ void Image::boucle_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
             if(e.type == SDL_QUIT){
                 is_running = false;
             } else if(e.type == SDL_KEYDOWN){
-                
+
                 std::string letter = SDL_GetKeyName(e.key.keysym.sym);
 
                 if(letter == "T"){
@@ -231,7 +240,7 @@ void Image::boucle_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
                         SDL_RenderSetScale(rendu, scale, scale);
                     }
                 }
-                
+
             }
 
         } // fin de la gestion des évènements
@@ -280,7 +289,7 @@ void Image::detruire_fenetre(SDL_Window* &fenetre, SDL_Renderer* &rendu){
 
 
 
-// 
+//
 void Image::afficher(){
 
 
@@ -299,9 +308,9 @@ void Image::afficher(){
 
 
 void Image::sauver(const std::string& filename) const {
-    
+
     std::ofstream fichier(filename.c_str());
-    
+
     if(fichier.is_open()){
 
         assert(fichier.is_open());
@@ -311,7 +320,7 @@ void Image::sauver(const std::string& filename) const {
         fichier << "255\n";
 
         for(unsigned int y=0; y<this->dimy; y++){
-            
+
             for(unsigned int x=0; x<this->dimx; x++){
                 Pixel& pix = getPix(x,y); // permet d'éviter d'accéder 3 fois au pixel, on y accède une fois, et ensuite on travaille sur une référence (pix)
                 fichier << (unsigned int) pix.getRouge() << " " << (unsigned int) pix.getVert() << " " << (unsigned int) pix.getBleu() << " ";
@@ -329,33 +338,33 @@ void Image::sauver(const std::string& filename) const {
 
 
 
-// 
+//
 void Image::ouvrir(const std::string& filename) {
-    
+
     std::ifstream fichier(filename.c_str());
-    
+
     if(fichier.is_open()){
 
         assert(fichier.is_open());
 
         unsigned int nr, ng, nb;
         std::string mot;
-        
+
         this -> dimx = 0;
         this -> dimy = 0;
-        
+
         fichier >> mot >> this->dimx >> this->dimy >> mot;
 
         std::cout << this->dimx << " x " << this->dimy << "\n";
 
         assert(this->dimx > 0 && this->dimy > 0);
-        
+
         if (tab != NULL){
             delete [] tab;
         }
 
         this->tab = new Pixel[this->dimx*this->dimy];
-        
+
         for(unsigned int y = 0; y < this->dimy; y++){
 
             for(unsigned int x = 0; x < this->dimx; x++){
@@ -365,7 +374,7 @@ void Image::ouvrir(const std::string& filename) {
             }
 
         }
-        
+
         fichier.close();
         std::cout << "Lecture de l'image " << filename << " ... OK\n";
 
@@ -396,82 +405,60 @@ void Image::afficherConsole(){
 void Image::testRegression(){
 
     // un pixel utilisé dans les tests
-    Pixel pixy(5, 5, 5); // pixy normal
-    
+    Pixel pixy(5, 5, 5);
     Pixel garbage(3, 67, 200);
     Image* img = NULL;
 
-
+    
     std::cout << "[TEST 1]\n";
     std::cout << "img = new Image(-1, 1)\n";
     img = new Image(-1, 1);
-        
+
     // setpix (normal)
     std::cout << "setpix(2, 2)\n";
     img -> setPix(2, 2, pixy);
-
     std::cout << "setpix(-2, 2)\n";
     img -> setPix(-2, 2, pixy);
-
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
-
 
     // getpix
     std::cout << "getpix(2, 2)\n";
     garbage = img -> getPix(2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
     std::cout << "getpix(-2, 2)\n";
     garbage = img -> getPix(-2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
-
     std::cout << "getpix(-2, -2)\n";
     garbage = img -> getPix(-2, -2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
 
-
-
     // dessinerRectangle
     std::cout << "dessinerRectangle(0,0,3,3, pixel)\n";
     img -> dessinerRectangle(0,0,3,3,pixy);
-
     std::cout << "dessinerRectangle(-1,-1,3,3, pixel)\n";
     img -> dessinerRectangle(-1,-1,3,3,pixy);
-
     std::cout << "dessinerRectangle(5,5,3,3, pixel)\n";
     img -> dessinerRectangle(5,5,3,3,pixy);
-
     std::cout << "dessinerRectangle(-5,-5,-3,-3, pixel)\n";
     img -> dessinerRectangle(-5,-5,-3,-3,pixy);
-
     std::cout << "dessinerRectangle(0,0,0,0, pixel)\n";
     img -> dessinerRectangle(0,0,0,0,pixy);
-
-
-    std::cout << "==>ok\n[FIN TEST 1]\n";
-    // freeeeee
+    std::cout << "[TEST 1 OK]\n";
     delete img;
     img = NULL;
 
 
     std::cout << "\n=================================\n\n";
-
-
-
     std::cout << "[TEST 2]\n";
     std::cout << "img = new Image(-1, -1)\n";
     img = new Image(-1, -1);
 
-
     // setpix
     std::cout << "setpix(2, 2)\n";
     img -> setPix(2, 2, pixy);
-
     std::cout << "setpix(-2, 2)\n";
     img -> setPix(-2, 2, pixy);
-
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
 
@@ -479,12 +466,9 @@ void Image::testRegression(){
     std::cout << "getpix(2, 2)\n";
     garbage = img -> getPix(2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
     std::cout << "getpix(-2, 2)\n";
     garbage = img -> getPix(-2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
-
     std::cout << "getpix(-2, -2)\n";
     garbage = img -> getPix(-2, -2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
@@ -494,41 +478,30 @@ void Image::testRegression(){
     // dessinerRectangle
     std::cout << "dessinerRectangle(0,0,3,3, pixel)\n";
     img -> dessinerRectangle(0,0,3,3,pixy);
-
     std::cout << "dessinerRectangle(-1,-1,3,3, pixel)\n";
     img -> dessinerRectangle(-1,-1,3,3,pixy);
-
     std::cout << "dessinerRectangle(5,5,3,3, pixel)\n";
     img -> dessinerRectangle(5,5,3,3,pixy);
-
     std::cout << "dessinerRectangle(-5,-5,-3,-3, pixel)\n";
     img -> dessinerRectangle(-5,-5,-3,-3,pixy);
-
     std::cout << "dessinerRectangle(0,0,0,0, pixel)\n";
     img -> dessinerRectangle(0,0,0,0,pixy);
 
-
-
-    std::cout << "==>ok\n[FIN TEST 2]\n";
-    // freeee !!
+    std::cout << "[TEST 2 OK]\n";
     delete img;
     img = NULL;
 
 
     std::cout << "\n=================================\n\n";
-
     std::cout << "[TEST 3]\n";
     std::cout << "img = new Image\n";
     img = new Image;
-    
 
     // setpix
     std::cout << "setpix(2, 2)\n";
     img -> setPix(2, 2, pixy);
-
     std::cout << "setpix(-2, 2)\n";
     img -> setPix(-2, 2, pixy);
-
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
 
@@ -537,12 +510,9 @@ void Image::testRegression(){
     std::cout << "getpix(2, 2)\n";
     garbage = img -> getPix(2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
     std::cout << "getpix(-2, 2)\n";
     garbage = img -> getPix(-2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
-
     std::cout << "getpix(-2, -2)\n";
     garbage = img -> getPix(-2, -2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
@@ -552,41 +522,30 @@ void Image::testRegression(){
     // dessinerRectangle
     std::cout << "dessinerRectangle(0,0,3,3, pixel)\n";
     img -> dessinerRectangle(0,0,3,3,pixy);
-
     std::cout << "dessinerRectangle(-1,-1,3,3, pixel)\n";
     img -> dessinerRectangle(-1,-1,3,3,pixy);
-
     std::cout << "dessinerRectangle(5,5,3,3, pixel)\n";
     img -> dessinerRectangle(5,5,3,3,pixy);
-
     std::cout << "dessinerRectangle(-5,-5,-3,-3, pixel)\n";
     img -> dessinerRectangle(-5,-5,-3,-3,pixy);
-
     std::cout << "dessinerRectangle(0,0,0,0, pixel)\n";
     img -> dessinerRectangle(0,0,0,0,pixy);
 
-
-
-    std::cout << "==>ok\n[FIN TEST 3]\n";
-    // freeee !!
+    std::cout << "[TEST 3 OK]\n";
     delete img;
     img = NULL;
 
 
     std::cout << "\n=================================\n\n";
-
-
     std::cout << "[TEST 4]\n";
     std::cout << "img = new Image(0,0)\n";
     img = new Image(0, 0);
-    
+
     // setpix
     std::cout << "setpix(2, 2)\n";
     img -> setPix(2, 2, pixy);
-
     std::cout << "setpix(-2, 2)\n";
     img -> setPix(-2, 2, pixy);
-
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
 
@@ -594,12 +553,9 @@ void Image::testRegression(){
     std::cout << "getpix(2, 2)\n";
     garbage = img -> getPix(2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
     std::cout << "getpix(-2, 2)\n";
     garbage = img -> getPix(-2, 2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
-
-
     std::cout << "getpix(-2, -2)\n";
     garbage = img -> getPix(-2, -2);
     std::cout << "> " << (int) garbage.getRouge() << "," << (int) garbage.getVert() << "," << (int) garbage.getBleu() << "\n";
@@ -608,24 +564,21 @@ void Image::testRegression(){
     // dessinerRectangle
     std::cout << "dessinerRectangle(0,0,3,3, pixel)\n";
     img -> dessinerRectangle(0,0,3,3,pixy);
-
     std::cout << "dessinerRectangle(-1,-1,3,3, pixel)\n";
     img -> dessinerRectangle(-1,-1,3,3,pixy);
-
     std::cout << "dessinerRectangle(5,5,3,3, pixel)\n";
     img -> dessinerRectangle(5,5,3,3,pixy);
-
     std::cout << "dessinerRectangle(-5,-5,-3,-3, pixel)\n";
     img -> dessinerRectangle(-5,-5,-3,-3,pixy);
-
     std::cout << "dessinerRectangle(0,0,0,0, pixel)\n";
     img -> dessinerRectangle(0,0,0,0,pixy);
 
-
-    std::cout << "==>ok\n[FIN TEST 4]\n";
-    // freeeeee
+    std::cout << "[TEST 4 OK]\n";
     delete img;
     img = NULL;
 
+    std::cout << "\n=================================\n";
+    std::cout << "> Tous les tests se sont termines correctement !";
+    std::cout << "\n=================================\n";
 
 }

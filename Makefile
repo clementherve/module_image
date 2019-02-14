@@ -1,5 +1,5 @@
-# Indique à make de ne pas exécuter clean sauf mention contraire
-.PHONY : clean, veryclean
+# Indique à make de ne pas exécuter clean & veryclean & doc sauf mention contraire
+.PHONY : clean, veryclean, doc
 
 
 # variables, pour la flexibilité.
@@ -54,6 +54,8 @@ obj/Image.o : src/Image.cpp src/Image.h src/Pixel.h
 	g++ $(Cflags) -c src/Image.cpp -o obj/Image.o $(Clib)
 
 
+doc :
+	doxygen doc/image.doxy
 
 
 # Enlève les fichiers intermédiaires
