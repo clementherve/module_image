@@ -1,7 +1,7 @@
 ###########################################
-#####								  #####
-#####			MODULE IMAGE		  #####
-#####								  #####
+#####								  								#####
+#####						MODULE IMAGE		  		#####
+#####								  								#####
 ###########################################
 
 
@@ -9,7 +9,7 @@
 
 
 ======================================
-===				Sommaire		   ===
+===							Sommaire		  		 ===
 ======================================
 
 1/ A propos des auteurs
@@ -29,7 +29,7 @@
 
 
 ======================================
-===		A propos des auteurs	   ===
+===				A propos des auteurs	   ===
 ======================================
 
 Cette application a été crée par trois étudiants en deuxième année de licence d'informatique
@@ -67,7 +67,7 @@ Le tout est lisible par un humain.
 
 
 ======================================
-===	 		   Prérequis  		   ===
+===	 		   		Prérequis  		   		 ===
 ======================================
 
 * Un ordinateur avec linux
@@ -85,7 +85,7 @@ Le tout est lisible par un humain.
 
 
 ======================================
-===	 		  installation   	   ===
+===	 		  	installation   	   		 ===
 ======================================
 
 La librairie SDL est nécessaire pour l'affichage des images.
@@ -102,7 +102,7 @@ La librairie SDL est nécessaire pour l'affichage des images.
 
 
 ======================================
-===	 		  compilation   	   ===
+===	 		  		compilation   	   	 ===
 ======================================
 
 
@@ -114,7 +114,7 @@ make bin/Test
 
 
 make bin/exemple
-	=> compile le module qui génère une image à la volée, puis utilise les fonctions de 
+	=> compile le module qui génère une image à la volée, puis utilise les fonctions de
 		sauvegarde sur le disque et d'ouverture.
 
 make (all)
@@ -130,7 +130,7 @@ make clean
 
 
 ======================================
-===	 		 	 exécution   	   ===
+===	 		 	 		 exécution   	   		 ===
 ======================================
 
 * exécuter src/mainAffichage.cpp
@@ -151,7 +151,7 @@ make clean
 
 
 ======================================
-===	 	organisation du module	   ===
+===	 		organisation du module	   ===
 ======================================
 
 *********************
@@ -189,5 +189,5 @@ La classe de base est Pixel.
 
 La classe Image fait appel à pixel pour créer et gérer le tableau
 
-Les trois fichiers commençant main[...].cpp permettent la génération de trois exécutables 
+Les trois fichiers commençant main[...].cpp permettent la génération de trois exécutables
 resp. bin/test, bin/affichage et bin/exemple appellant la classe Image
