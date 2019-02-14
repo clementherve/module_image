@@ -1,12 +1,12 @@
 # Indique à make de ne pas exécuter clean sauf mention contraire
-.PHONY : clean
+.PHONY : clean, veryclean
 
 
 # variables, pour la flexibilité.
 # Pour compiler sans debug, enlever -ggdb
 # Clib contient la librairie SDL pour l'affichage graphique
 Cflags = -ggdb -Wall
-Clib = -L/usr/include/ -lSDL2main -lSDL2
+Clib = -L/usr/include/ -lSDL2
 
 
 # Construit tous les main
@@ -57,8 +57,8 @@ obj/Image.o : src/Image.cpp src/Image.h src/Pixel.h
 
 
 # Enlève les fichiers intermédiaires
-clean : 
+clean :
 	rm -f obj/*
 
-veryclean : 
+veryclean :
 	rm -f obj/* bin/*
