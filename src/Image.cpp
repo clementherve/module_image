@@ -398,9 +398,6 @@ void Image::testRegression(){
     // un pixel utilisé dans les tests
     Pixel pixy(5, 5, 5); // pixy normal
     
-    // Pixel depressedPixy(-5, -5, -5); //pixy negatif (depressed)
-    // Pixel excitedPixy(400, 400, 400); //pixy positif (excited)
-
     Pixel garbage(3, 67, 200);
     Image* img = NULL;
 
@@ -418,28 +415,6 @@ void Image::testRegression(){
 
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
-
-
-    // // setpix (excited)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, excitedPixy);
-
-
-    // // setpix (depressed)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, depressedPixy);
 
 
     // getpix
@@ -500,29 +475,6 @@ void Image::testRegression(){
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
 
-
-    // // setpix (excited)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, excitedPixy);
-
-
-    // // setpix (depressed)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, depressedPixy);
-
-
     // getpix
     std::cout << "getpix(2, 2)\n";
     garbage = img -> getPix(2, 2);
@@ -581,29 +533,6 @@ void Image::testRegression(){
     img -> setPix(-2, -2, pixy);
 
 
-    // // setpix (excited)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, excitedPixy);
-
-
-    // // setpix (depressed)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, depressedPixy);
-
-
-
     // getpix
     std::cout << "getpix(2, 2)\n";
     garbage = img -> getPix(2, 2);
@@ -660,28 +589,6 @@ void Image::testRegression(){
 
     std::cout << "setpix(-2, -2)\n";
     img -> setPix(-2, -2, pixy);
-
-
-    // // setpix (excited)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, excitedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, excitedPixy);
-
-
-    // // setpix (depressed)
-    // std::cout << "setpix(2, 2)\n";
-    // img -> setPix(2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, 2)\n";
-    // img -> setPix(-2, 2, depressedPixy);
-
-    // std::cout << "setpix(-2, -2)\n";
-    // img -> setPix(-2, -2, depressedPixy);
 
     // getpix
     std::cout << "getpix(2, 2)\n";

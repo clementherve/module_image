@@ -58,4 +58,7 @@ obj/Image.o : src/Image.cpp src/Image.h src/Pixel.h
 
 # Enlève les fichiers intermédiaires
 clean : 
+	rm -f obj/*
+
+veryclean : 
 	rm -f obj/* bin/*

@@ -36,9 +36,9 @@ Cette application a été crée par trois étudiants en deuxième année de lice
 durant l'un de leurs cours (LIFAP4) sous la supervision des encadrants de l'UE.
 
 
-11615530 - HERVE Clément
 11208117 - BRUNET Gauthier
 11414551 - TEIXEIRA MAGALHAES Tiago
+11615530 - HERVE Clément
 
 
 
@@ -55,7 +55,8 @@ durant l'un de leurs cours (LIFAP4) sous la supervision des encadrants de l'UE.
 Le module image est une application permettant de créer, ouvrir, modifier et sauvegarder
 des fichiers .ppm
 
-Un fichier ppm encode une image en utilisant la valeur de chaque pixel
+Un fichier ppm encode une image en utilisant la valeur de chaque pixel au format RGB stocké (parfois au format ascii) dans un fichier.
+Le tout est lisible par un humain.
 
 
 
@@ -70,7 +71,7 @@ Un fichier ppm encode une image en utilisant la valeur de chaque pixel
 ======================================
 
 * Un ordinateur avec linux
-	=> Testé, compilé et fonctionnel avec Ubuntu 18.04 et Fedora 4
+	=> Testé, compilé et fonctionnel avec Ubuntu 18.04 et Fedora 28
 
 * La librairie SDL 2.0 installée pour l'affichage graphique
 	=> Voir la rubrique **installation**
